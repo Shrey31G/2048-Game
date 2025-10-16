@@ -86,66 +86,118 @@ export default function Home() {
   }, [handleMove]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-8 p-4 lg:flex-row lg:gap-16">
-      <div className="flex flex-shrink-0 items-center justify-center">
+    <main className="bg-background flex min-h-screen flex-col items-center justify-center gap-8 p-4 lg:flex-row lg:gap-16">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, ease: "easeIn" }}
+        className="flex flex-shrink-0 items-center justify-center"
+      >
         <Board board={board} />
-      </div>
+      </motion.div>
 
       <div className="flex flex-col items-center gap-8">
-        <div className="text-center">
-          <h1 className="mb-2 text-6xl font-bold">2048</h1>
-          <p>Join the tiles, get to 2048!</p>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="text-center"
+        >
+          <h1 className="text-foreground mb-2 text-6xl font-bold">2048</h1>
+          <p className="text-muted-foreground">Join the tiles, get to 2048!</p>
+        </motion.div>
 
-        <div className="flex items-center gap-4">
-          <div className="rounded-lg bg-yellow-500 px-6 py-3 text-white shadow-md">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+          className="flex items-center gap-4"
+        >
+          <div
+            className="bg-primary text-primary-foreground rounded-lg px-6 py-3 shadow-md"
+          >
             <div className="text-sm font-semibold">SCORE</div>
-            <div className="text-center text-2xl font-bold">{score}</div>
+            <motion.div
+              key={score}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="text-center text-2xl font-bold"
+            >
+              {score}
+            </motion.div>
           </div>
+
           <motion.button
             whileHover={{
-              scale: 1.1,
-              transition: { duration: 0.5 },
+              scale: 1.08,
+              boxShadow: "0 10px 25px rgba(0, 0, 0, 0.2)",
+              transition: { duration: 0.7, ease: "easeOut" },
             }}
             whileTap={{
               scale: 0.95,
             }}
             onClick={resetGame}
-            className="cursor-pointer rounded-lg bg-gray-700 px-6 py-3 font-bold text-white shadow-md transition-colors hover:bg-gray-800"
+            className="bg-secondary text-secondary-foreground cursor-pointer rounded-lg px-6 py-3 font-bold shadow-md transition-all duration-200"
           >
             New Game
           </motion.button>
           <ModeToggle />
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-3 gap-2 lg:hidden">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+          className="grid grid-cols-3 gap-2 lg:hidden"
+        >
           <div></div>
-          <button
+          <motion.button
+            whileHover={{
+              scale: 1.1,
+              boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)",
+            }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => handleMove("up")}
-            className="rounded-lg bg-blue-500 p-4 text-white active:bg-blue-600"
+            className="bg-primary text-primary-foreground rounded-lg p-4 shadow-sm transition-all duration-150"
           >
             ↑
-          </button>
+          </motion.button>
           <div></div>
-          <button
+          <motion.button
+            whileHover={{
+              scale: 1.1,
+              boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)",
+            }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => handleMove("left")}
-            className="rounded-lg bg-blue-500 p-4 text-white active:bg-blue-600"
+            className="bg-primary text-primary-foreground rounded-lg p-4 shadow-sm transition-all duration-150"
           >
             ←
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{
+              scale: 1.1,
+              boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)",
+            }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => handleMove("down")}
-            className="rounded-lg bg-blue-500 p-4 text-white active:bg-blue-600"
+            className="bg-primary text-primary-foreground rounded-lg p-4 shadow-sm transition-all duration-150"
           >
             ↓
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{
+              scale: 1.1,
+              boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)",
+            }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => handleMove("right")}
-            className="rounded-lg bg-blue-500 p-4 text-white active:bg-blue-600"
+            className="bg-primary text-primary-foreground rounded-lg p-4 shadow-sm transition-all duration-150"
           >
             →
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
       </div>
 
       {gameOver && <GameOver won={won} score={score} onRestart={resetGame} />}
