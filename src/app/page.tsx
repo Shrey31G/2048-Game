@@ -113,9 +113,7 @@ export default function Home() {
           transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
           className="flex items-center gap-4"
         >
-          <div
-            className="bg-primary text-primary-foreground rounded-lg px-6 py-3 shadow-md"
-          >
+          <div className="bg-primary text-primary-foreground rounded-lg px-6 py-3 shadow-md">
             <div className="text-sm font-semibold">SCORE</div>
             <motion.div
               key={score}
