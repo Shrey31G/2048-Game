@@ -45,25 +45,35 @@ export const initializeBoard = (): Board => {
 }
 
 // this functions adds similar tiles if player moves left and increases score
-const slideRowLeft = (row: number[]): { row: number[], score: number } => {
-    let newRow = row.filter(val => val !== 0);
+const slideAndMergeRow = (row: number[]): { row: number[], score: number } => {
+    // Step 1: Remove all zeros
+    let filtered = row.filter(val => val !== 0);
     let score = 0;
 
-    for (let i = 0; i < newRow.length - 1; i++) {
-        if (newRow[i] === newRow[i + 1]) {
-            score += newRow[i];
-            newRow[i] *= 2;
-            newRow[i + 1] = 0;
+    // Step 2: Merge adjacent equal numbers
+    let merged: number[] = [];
+    let i = 0;
+    while (i < filtered.length) {
+        if (i + 1 < filtered.length && filtered[i] === filtered[i + 1]) {
+            // Merge these two tiles
+            const mergedValue = filtered[i] * 2;
+            merged.push(mergedValue);
+            score += mergedValue;
+            i += 2; // Skip both tiles
+        } else {
+            // No merge, just add the tile
+            merged.push(filtered[i]);
+            i += 1;
         }
     }
-    newRow = newRow.filter(val => val !== 0)
 
-    while (newRow.length < GRID_SIZE) {
-        newRow.push(0)
+    // Step 3: Pad with zeros to maintain size
+    while (merged.length < GRID_SIZE) {
+        merged.push(0);
     }
 
-    return { row: newRow, score }
-}
+    return { row: merged, score };
+};
 
 // this function utilize the above function to check if moveleft changed anything 
 export const moveLeft = (board: Board): { board: Board, score: number, moved: boolean } => {
@@ -71,9 +81,9 @@ export const moveLeft = (board: Board): { board: Board, score: number, moved: bo
     let moved = false;
 
     const newBoard = board.map(row => {
-        const { row: newRow, score } = slideRowLeft(row);
+        const { row: newRow, score } = slideAndMergeRow(row);
         totalScore += score;
-        if (JSON.stringify(row) !== JSON.stringify(newRow)) {  
+        if (JSON.stringify(row) !== JSON.stringify(newRow)) {
             moved = true
         }
         return newRow
@@ -129,7 +139,7 @@ export const moveDown = (board: Board): { board: Board, score: number, moved: bo
 };
 
 export const canMove = (board: Board) => {
-    if (getEmptyCells.length > 0) return true;
+    if (getEmptyCells(board).length > 0) return true;
 
     for (let row = 0; row < GRID_SIZE; row++) {
         for (let col = 0; col < GRID_SIZE - 1; col++) {
@@ -157,6 +167,7 @@ export const hasWon = (board: Board) => {
             }
         }
     }
+    return false;
 }
 
 export const move = (board: Board, direction: Direction): { board: Board, score: number, moved: boolean } => {
