@@ -170,15 +170,22 @@ export const hasWon = (board: Board) => {
     return false;
 }
 
-export const move = (board: Board, direction: Direction): { board: Board, score: number, moved: boolean } => {
-    switch (direction) {
+
+export const move = (board: Board, direction: string): { board: Board, score: number, moved: boolean } => {
+    switch (direction.toLowerCase()) {
+        case 'w':
         case 'up':
             return moveUp(board)
+        case 's':
         case 'down':
             return moveDown(board)
+        case 'a':
         case 'left':
             return moveLeft(board)
+        case 'd':
         case 'right':
             return moveRight(board)
+        default:
+            return { board, score: 0, moved: false }
     }
 };

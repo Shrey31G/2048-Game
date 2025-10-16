@@ -51,21 +51,31 @@ export default function Home() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+      const key = e.key.toLowerCase();
+
+      if (["arrowup", "arrowdown", "arrowleft", "arrowright"].includes(key)) {
         e.preventDefault();
       }
 
-      switch (e.key) {
-        case "ArrowUp":
+      switch (key) {
+        case "arrowup":
+        case "w":
+          e.preventDefault();
           handleMove("up");
           break;
-        case "ArrowDown":
+        case "arrowdown":
+        case "s":
+          e.preventDefault();
           handleMove("down");
           break;
-        case "ArrowLeft":
+        case "arrowleft":
+        case "a":
+          e.preventDefault();
           handleMove("left");
           break;
-        case "ArrowRight":
+        case "arrowright":
+        case "d":
+          e.preventDefault();
           handleMove("right");
           break;
       }
@@ -108,7 +118,6 @@ export default function Home() {
           <ModeToggle />
         </div>
 
-        {/* Mobile Controls */}
         <div className="grid grid-cols-3 gap-2 lg:hidden">
           <div></div>
           <button
