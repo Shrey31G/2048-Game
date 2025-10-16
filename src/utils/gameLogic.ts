@@ -73,7 +73,7 @@ export const moveLeft = (board: Board): { board: Board, score: number, moved: bo
     const newBoard = board.map(row => {
         const { row: newRow, score } = slideRowLeft(row);
         totalScore += score;
-        if (JSON.stringify(row) !== JSON.stringify(row)) {
+        if (JSON.stringify(row) !== JSON.stringify(newRow)) {  
             moved = true
         }
         return newRow
