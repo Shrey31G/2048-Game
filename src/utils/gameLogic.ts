@@ -1,4 +1,4 @@
-import { GRID_SIZE } from "./constants"
+import { GRID_SIZE, WINNING_TILE } from "./constants"
 
 export type Board = number[][]
 export type Direction = 'up' | 'down' | 'left' | 'right'
@@ -126,4 +126,48 @@ export const moveDown = (board: Board): { board: Board, score: number, moved: bo
         score: result.score,
         moved: result.moved
     };
+};
+
+export const canMove = (board: Board) => {
+    if (getEmptyCells.length > 0) return true;
+
+    for (let row = 0; row < GRID_SIZE; row++) {
+        for (let col = 0; col < GRID_SIZE - 1; col++) {
+            if (board[row][col] === board[row][col + 1]) {
+                return true;
+            }
+        }
+    }
+
+    for (let row = 0; row < GRID_SIZE - 1; row++) {
+        for (let col = 0; col < GRID_SIZE; col++) {
+            if (board[row][col] === board[row + 1][col]) {
+                return true
+            }
+        }
+    }
+    return false;
+}
+
+export const hasWon = (board: Board) => {
+    for (let row = 0; row < GRID_SIZE; row++) {
+        for (let col = 0; col < GRID_SIZE; col++) {
+            if (board[row][col] === WINNING_TILE) {
+                return true;
+            }
+        }
+    }
+}
+
+export const move = (board: Board, direction: Direction): { board: Board, score: number, moved: boolean } => {
+    switch (direction) {
+        case 'up':
+            return moveUp(board)
+        case 'down':
+            return moveDown(board)
+        case 'left':
+            return moveLeft(board)
+        case 'right':
+            return moveRight(board)
+    }
 };
