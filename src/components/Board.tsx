@@ -10,7 +10,7 @@ interface BoardProps {
 export const Board: React.FC<BoardProps> = ({ board }) => {
   return (
     <div
-      className="rounded-lg bg-gray-300 p-4 shadow-xl"
+      className="rounded-lg border-2 bg-gray-400 p-4 shadow-xl"
       style={{
         display: "grid",
         gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,

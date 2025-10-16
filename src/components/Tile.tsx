@@ -10,7 +10,7 @@ export const Tile: React.FC<TileProps> = ({ value }) => {
 
   return (
     <div
-      className={` ${colorClass} flex h-full w-full items-center justify-center rounded-lg text-2xl font-bold transition-all duration-150 ${value === 0 ? "" : "shadow-md"} `}
+      className={` ${colorClass} flex h-full w-full items-center justify-center rounded-lg text-2xl font-bold transition-all duration-250 ${value === 0 ? "" : "shadow-md"} `}
     >
       {value !== 0 && value}
     </div>
