@@ -8,6 +8,8 @@ interface BoardProps {
 }
 
 export const Board: React.FC<BoardProps> = ({ board }) => {
+  const boardSize = "min(90vw, 500px)";
+
   return (
     <div
       className="rounded-lg border-2 bg-gray-400 p-4 shadow-xl"
@@ -15,8 +17,8 @@ export const Board: React.FC<BoardProps> = ({ board }) => {
         display: "grid",
         gridTemplateColumns: `repeat(${GRID_SIZE}, 1fr)`,
         gap: "12px",
-        width: "min(90vw, 500px)",
-        height: "min(90vw, 500px)",
+        width: "min(90vw, 450px)",
+        height: "min(90vw, 450px)",
       }}
     >
       {board.map((row, rowIndex) =>

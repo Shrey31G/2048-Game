@@ -76,41 +76,41 @@ export default function Home() {
   }, [handleMove]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4">
-      <div className="grid grid-cols-2">
-        <div>
-          <Board board={board} />
+    <main className="flex min-h-screen flex-col items-center justify-center gap-8 p-4 lg:flex-row lg:gap-16">
+      <div className="flex flex-shrink-0 items-center justify-center">
+        <Board board={board} />
+      </div>
+
+      <div className="flex flex-col items-center gap-8">
+        <div className="text-center">
+          <h1 className="mb-2 text-6xl font-bold">2048</h1>
+          <p>Join the tiles, get to 2048!</p>
         </div>
 
-        <div className="flex flex-col items-center">
-          <div className="mb-8 text-center">
-            <h1 className="mb-2 text-6xl font-bold">2048</h1>
-            <p className="">Join the tiles, get to 2048!</p>
+        <div className="flex items-center gap-4">
+          <div className="rounded-lg bg-yellow-500 px-6 py-3 text-white shadow-md">
+            <div className="text-sm font-semibold">SCORE</div>
+            <div className="text-center text-2xl font-bold">{score}</div>
           </div>
-
-          <div className="mb-6 flex items-center gap-4">
-            <div className="rounded-lg bg-yellow-500 px-6 py-3 text-white shadow-md">
-              <div className="text-sm font-semibold">SCORE</div>
-              <div className="text-center text-2xl font-bold">{score}</div>
-            </div>
-            <motion.button
-              whileHover={{
-                scale: 1.1,
-                transition: { duration: 0.5 },
-              }}
-              whileTap={{
-                scale: 0.95,
-              }}
-              onClick={resetGame}
-              className="cursor-pointer rounded-lg bg-gray-700 px-6 py-3 font-bold text-white shadow-md transition-colors hover:bg-gray-800"
-            >
-              New Game
-            </motion.button>
-            <ModeToggle></ModeToggle>
-          </div>
+          <motion.button
+            whileHover={{
+              scale: 1.1,
+              transition: { duration: 0.5 },
+            }}
+            whileTap={{
+              scale: 0.95,
+            }}
+            onClick={resetGame}
+            className="cursor-pointer rounded-lg bg-gray-700 px-6 py-3 font-bold text-white shadow-md transition-colors hover:bg-gray-800"
+          >
+            New Game
+          </motion.button>
+          <ModeToggle />
         </div>
 
-        <div className="mt-6 grid grid-cols-3 gap-2 md:hidden">
+        {/* Mobile Controls */}
+        <div className="grid grid-cols-3 gap-2 lg:hidden">
+          <div></div>
           <button
             onClick={() => handleMove("up")}
             className="rounded-lg bg-blue-500 p-4 text-white active:bg-blue-600"
@@ -138,6 +138,7 @@ export default function Home() {
           </button>
         </div>
       </div>
+
       {gameOver && <GameOver won={won} score={score} onRestart={resetGame} />}
     </main>
   );
