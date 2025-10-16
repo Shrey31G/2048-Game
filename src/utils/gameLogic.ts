@@ -46,28 +46,25 @@ export const initializeBoard = (): Board => {
 
 // this functions adds similar tiles if player moves left and increases score
 const slideAndMergeRow = (row: number[]): { row: number[], score: number } => {
-    // Step 1: Remove all zeros
-    let filtered = row.filter(val => val !== 0);
+
+    const filtered = row.filter(val => val !== 0);
     let score = 0;
 
-    // Step 2: Merge adjacent equal numbers
-    let merged: number[] = [];
+    const merged: number[] = [];
     let i = 0;
     while (i < filtered.length) {
         if (i + 1 < filtered.length && filtered[i] === filtered[i + 1]) {
-            // Merge these two tiles
+
             const mergedValue = filtered[i] * 2;
             merged.push(mergedValue);
             score += mergedValue;
-            i += 2; // Skip both tiles
+            i += 2;
         } else {
-            // No merge, just add the tile
             merged.push(filtered[i]);
             i += 1;
         }
     }
 
-    // Step 3: Pad with zeros to maintain size
     while (merged.length < GRID_SIZE) {
         merged.push(0);
     }
@@ -101,9 +98,8 @@ const rotateClockwise = (board: Board): Board => {
 }
 
 const rotateCounterClockwise = (board: Board): Board => {
-    const n = GRID_SIZE;
     return board[0].map((_, i) =>
-        board.map(row => row[n - 1 - i])
+        board.map(row => row[GRID_SIZE - 1 - i])
     );
 };
 
